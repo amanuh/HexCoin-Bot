@@ -3,7 +3,7 @@ import logging
 import pytz
 from datetime import datetime, timedelta
 from pymongo import MongoClient
-
+'''
 # Function to ensure time sync
 def sync_time():
     utc_now = datetime.now(pytz.utc)
@@ -11,7 +11,7 @@ def sync_time():
 
 # Sync time on start
 sync_time()
-
+'''
 # Replace these with your API ID, hash, and bot token
 api_id = '12997033'
 api_hash = '31ee7eb1bf2139d96a1147f3553e0364'
