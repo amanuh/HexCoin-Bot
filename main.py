@@ -4,13 +4,6 @@ import pytz
 from datetime import datetime, timedelta
 from pymongo import MongoClient
 
-# Function to ensure time sync
-def sync_time():
-    utc_now = datetime.now(pytz.utc)
-    logger.info(f"Time synchronized to UTC: {utc_now}")
-
-# Sync time on start
-sync_time()
 
 # Replace these with your API ID, hash, and bot token
 api_id = '12997033'
@@ -33,6 +26,14 @@ mongo_uri = "mongodb+srv://syblewilliam8103:amanpathan123@systemdata.vyhjllc.mon
 client = MongoClient(mongo_uri)
 db = client["hexcoin_bot"]
 users_collection = db["users"]
+
+# Function to ensure time sync
+def sync_time():
+    utc_now = datetime.now(pytz.utc)
+    logger.info(f"Time synchronized to UTC: {utc_now}")
+
+# Sync time on start
+sync_time()
 
 
 @app.on_message(filters.command("start"))
