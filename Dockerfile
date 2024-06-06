@@ -4,12 +4,16 @@ FROM python:3.9-slim
 # Set working directory
 WORKDIR /app
 
-# Copy requirements file and install dependencies
+# Install dependencies
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-# Copy the rest of the application code
+# Install NTP for time synchronization
+RUN apt-get update && apt-get install -y ntp
+RUN service ntp start
+
+# Copy application code
 COPY . .
 
 # Command to run the bot
-CMD ["python", "main.py"]
+CMD service ntp start && python main.py
