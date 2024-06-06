@@ -6,14 +6,10 @@ WORKDIR /app
 
 # Install dependencies
 COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-# Install NTP for time synchronization
-RUN apt-get update && apt-get install -y ntp
-RUN service ntp start
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY . .
 
 # Command to run the bot
-CMD service ntp start && python main.py
+CMD ["python", "main.py"]
