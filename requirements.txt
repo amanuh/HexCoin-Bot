@@ -1,3 +1,4 @@
 pyrogram
 logging
 pymongo
+tgcrypto
