@@ -1,14 +1,20 @@
-# Use official Python image from Docker Hub
-FROM python:3.9
-# Set working directory
+# Use a lightweight Python image
+FROM python:3.9-slim
+
+# Install ntpdate
+RUN apt-get update && apt-get install -y ntpdate
+
+# Set the working directory
 WORKDIR /app
 
-# Install dependencies
-COPY requirements.txt .
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
-COPY . .
+# Make start.sh executable
+RUN chmod +x start.sh
 
-# Command to run the bot
-CMD ["python", "main.py"]
+# Run start.sh when the container launches
+CMD ["./start.sh"]
