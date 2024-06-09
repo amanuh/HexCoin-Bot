@@ -16,5 +16,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Make start.sh executable
 RUN chmod +x start.sh
 
-# Run start.sh when the container launches
-CMD ["./start.sh"]
+# Sync system clock at container start and start the bot
+CMD ntpdate -s time.nist.gov && ./start.sh
