@@ -3,6 +3,11 @@ import logging
 import pytz
 from datetime import datetime, timedelta
 from pymongo import MongoClient
+from datetime import datetime, timezone
+
+# Get the current time in UTC
+utc_now = datetime.now(timezone.utc)
+logger.info(f"UTC time at startup: {utc_now}")
 
 
 # Replace these with your API ID, hash, and bot token
