@@ -5,9 +5,6 @@ from datetime import datetime, timedelta
 from pymongo import MongoClient
 from datetime import datetime, timezone
 
-# Get the current time in UTC
-utc_now = datetime.now(timezone.utc)
-logger.info(f"UTC time at startup: {utc_now}")
 
 
 # Replace these with your API ID, hash, and bot token
@@ -25,6 +22,12 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
+
+
+# Get the current time in UTC
+utc_now = datetime.now(timezone.utc)
+logger.info(f"UTC time at startup: {utc_now}")
+
 
 # MongoDB setup (replace <username>, <password>, <dbname> with actual values)
 mongo_uri = "mongodb+srv://syblewilliam8103:amanpathan123@systemdata.vyhjllc.mongodb.net/?retryWrites=true&w=majority&appName=SystemData"
