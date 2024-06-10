@@ -185,6 +185,24 @@ Happy HexCoining! 🌟'''
     message.reply_text(help_text)
     logger.info(f"User {message.from_user.id} requested help.")
 
+@app.on_message(filters.command("stats"))
+def stats(client, message):
+    user_count = users_collection.count_documents({})
+    total_balance = users_collection.aggregate([
+        {
+            "$group": {
+                "_id": None,
+                "total": {"$sum": "$balance"}
+            }
+        }
+    ])
+    total_balance = list(total_balance)[0]['total'] if total_balance else 0
+
+    stats_message = f"There are currently {user_count} users with a total of {total_balance} HexCoins."
+    message.reply_text(stats_message)
+    logger.info(f"User {message.from_user.id} requested stats.")
+
+
 
 if __name__ == "__main__":
     app.run()
