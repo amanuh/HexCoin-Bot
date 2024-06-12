@@ -4,4 +4,4 @@
 ntpdate -s time.nist.gov
 
 # Start the bot
-python bot.py
+python main.py
