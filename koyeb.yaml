@@ -1,0 +1,7 @@
+name: hexcoin-bot
+services:
+  - name: hexcoin-worker
+    type: worker
+    image:
+      dockerfile_path: ./Dockerfile
+    
