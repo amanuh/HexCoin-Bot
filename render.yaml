@@ -1,9 +1,8 @@
 services:
-  - type: web
-    name: hexcoin-bot
-    env: python
+  - name: hexcoin-bot
+    type: worker
+    env: docker
+    dockerfilePath: ./Dockerfile
     buildCommand: ""
-    startCommand: "python main.py"
-    plan: free
-    region: oregon
+    startCommand: ./start.sh
     
