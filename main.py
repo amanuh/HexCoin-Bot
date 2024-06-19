@@ -247,6 +247,18 @@ def broadcast(client, message):
     app.send_message(OWNER_ID, summary_message)
     logger.info(f"Broadcast summary: {summary_message}")
 
-
+@app.on_message(filters.command("id"))
+def get_user_id(client, message):
+    if message.reply_to_message:
+        # If the command is used as a reply, get the ID of the replied-to user
+        target_user_id = message.reply_to_message.from_user.id
+        message.reply_text(f"The ID of the user you replied to is: {target_user_id}")
+        logger.info(f"User {message.from_user.id} requested the ID of user {target_user_id}.")
+    else:
+        # If the command is used directly, get the ID of the sender
+        user_id = message.from_user.id
+        message.reply_text(f"Your ID is: {user_id}")
+        logger.info(f"User {user_id} requested their own ID.")
+        
 if __name__ == "__main__":
     app.run()
