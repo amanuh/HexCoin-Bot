@@ -193,7 +193,7 @@ def stats(client, message):
     ])
     total_balance = list(total_balance)[0]['total'] if total_balance else 0
 
-    stats_message = f"Total number of users: {user_count}\n Total hexcoins {total_balance} "
+    stats_message = f"➥Total number of users: {user_count}\n➥Total hexcoins: {total_balance} "
     message.reply_text(stats_message)
     
 
@@ -235,7 +235,7 @@ def broadcast(client, message):
     except Exception as e:
         logger.error(f"Error retrieving dialogs: {e}")
 
-    summary_message = f"Broadcast completed.\nSuccess: {success_count}\nFailures: {failure_count}"
+    summary_message = f"Broadcast completed.\n➥Success: {success_count}\n➥Failures: {failure_count}"
     app.send_message(OWNER_ID, summary_message)
     logger.info(f"Broadcast summary: {summary_message}")
 
