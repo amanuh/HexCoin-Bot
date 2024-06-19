@@ -96,12 +96,12 @@ def send(client, message):
     parts = message.text.split()
 
     if len(parts) != 2:
-        message.reply_text("Usage: /send <Amount>")
+        message.reply_text("Usage: /send Amount")
         logger.warning(f"User {user_id} provided incorrect /send command format.")
         return
 
     if not message.reply_to_message:
-        message.reply_text("Please reply to the user you want to send HexCoins to with the command /send <Amount>.")
+        message.reply_text("Please reply to the user you want to send HexCoins to with the command /send Amount.")
         logger.warning(f"User {user_id} tried to send HexCoins without replying to a user.")
         return
 
@@ -150,8 +150,8 @@ def daily(client, message):
         last_claim_time = user.get("last_claim")
         if last_claim_time is None or current_time - last_claim_time >= timedelta(days=1):
             users_collection.update_one({"_id": user_id},
-                                        {"$inc": {"balance": 69}, "$set": {"last_claim": current_time}})
-            message.reply_text("Congratulations!\nYou have claimed your daily reward of 69 HexCoins.")
+                                        {"$inc": {"balance": 100}, "$set": {"last_claim": current_time}})
+            message.reply_text("Congratulations!\nYou have claimed your daily reward of 100 HexCoins.")
             logger.info(f"User {user_id} claimed their daily reward.")
         else:
             remaining_time = timedelta(days=1) - (current_time - last_claim_time)
@@ -175,7 +175,7 @@ Welcome to HexCoin Bot! \nBelow is a list of commands you can use to manage your
 ➥/start: Create a new wallet with an initial balance of 100 HexCoins.
 ➥/balance: Check your current HexCoin balance.
 ➥/send <amount>: Send HexCoins to another user by replying to their message with this command and the amount you wish to send.
-➥/daily: Claim your daily reward of 69 HexCoins (once every 24 hours).
+➥/daily: Claim your daily reward of 100 HexCoins (once every 24 hours).
 ➥/help: Display this help message with a list of available commands and their descriptions.
 ➥/id: Get your own user ID or the ID of another user by replying to their message.
 
@@ -200,7 +200,7 @@ def stats(client, message):
     ])
     total_balance = list(total_balance)[0]['total'] if total_balance else 0
 
-    stats_message = f"There are currently {user_count} users with a total of {total_balance} HexCoins."
+    stats_message = f"Total number of users: {user_count}\n Total hexcoins {total_balance} "
     message.reply_text(stats_message)
     logger.info(f"User {message.from_user.id} requested stats.")
 
