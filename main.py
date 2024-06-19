@@ -177,6 +177,7 @@ Welcome to HexCoin Bot! \nBelow is a list of commands you can use to manage your
 ➥/send <amount>: Send HexCoins to another user by replying to their message with this command and the amount you wish to send.
 ➥/daily: Claim your daily reward of 69 HexCoins (once every 24 hours).
 ➥/help: Display this help message with a list of available commands and their descriptions.
+➥/id: Get your own user ID or the ID of another user by replying to their message.
 
 Need assistance or have questions? \nUse /help to revisit this guide at any time.
 
