@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 api_id = '12997033'
 api_hash = '31ee7eb1bf2139d96a1147f3553e0364'
 bot_token = '6673562999:AAFWNCCzLuVU0rMUEi3d5j9cIoMsJGQLWpI'
+OWNER_ID = 1352973730
 
 app = Client("hexcoin_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
@@ -202,6 +203,49 @@ def stats(client, message):
     message.reply_text(stats_message)
     logger.info(f"User {message.from_user.id} requested stats.")
 
+@app.on_message(filters.command("broadcast"))
+def broadcast(client, message):
+    user_id = message.from_user.id
+
+    if user_id != OWNER_ID:
+        message.reply_text("You are not authorized to use this command.")
+        logger.warning(f"Unauthorized user {user_id} tried to use /broadcast command.")
+        return
+
+    if not message.reply_to_message:
+        message.reply_text("Please reply to the message you want to broadcast with the command /broadcast.")
+        logger.warning(f"User {user_id} tried to use /broadcast command without replying to a message.")
+        return
+
+    broadcast_message = message.reply_to_message.text
+    success_count = 0
+    failure_count = 0
+
+    users = users_collection.find({})
+    for user in users:
+        try:
+            app.send_message(user["_id"], broadcast_message)
+            success_count += 1
+        except Exception as e:
+            failure_count += 1
+            logger.error(f"Error broadcasting message to user {user['_id']}: {e}")
+
+    try:
+        chats = app.get_dialogs()
+        for chat in chats:
+            if chat.chat.type in ["group", "supergroup"]:
+                try:
+                    app.send_message(chat.chat.id, broadcast_message)
+                    success_count += 1
+                except Exception as e:
+                    failure_count += 1
+                    logger.error(f"Error broadcasting message to chat {chat.chat.id}: {e}")
+    except Exception as e:
+        logger.error(f"Error retrieving dialogs: {e}")
+
+    summary_message = f"Broadcast completed.\nSuccess: {success_count}\nFailures: {failure_count}"
+    app.send_message(OWNER_ID, summary_message)
+    logger.info(f"Broadcast summary: {summary_message}")
 
 
 if __name__ == "__main__":
