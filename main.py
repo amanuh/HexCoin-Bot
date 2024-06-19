@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 # Get the current time in UTC
 utc_now = datetime.now(timezone.utc)
-logger.info(f"UTC time at startup: {utc_now}")
+
 
 
 # MongoDB setup (replace <username>, <password>, <dbname> with actual values)
@@ -39,7 +39,7 @@ users_collection = db["users"]
 # Function to ensure time sync
 def sync_time():
     utc_now = datetime.now(pytz.utc)
-    logger.info(f"Time synchronized to UTC: {utc_now}")
+   
 
 # Sync time on start
 sync_time()
@@ -74,8 +74,7 @@ Happy HexCoining! 🌟''')
     else:
         user = users_collection.find_one({"_id": user_id})
         message.reply_text(f"Welcome back! \nYour current balance is {user['balance']} HexCoins.")
-        logger.info(f"User {user_id} returned with balance {user['balance']} HexCoins.")
-
+       
 
 @app.on_message(filters.command("balance"))
 def balance(client, message):
@@ -84,10 +83,9 @@ def balance(client, message):
     user = users_collection.find_one({"_id": user_id})
     if user:
         message.reply_text(f"Your current balance is {user['balance']} HexCoins.")
-        logger.info(f"User {user_id} checked balance: {user['balance']} HexCoins.")
     else:
         message.reply_text("You don't have a wallet yet. Use /start to create one.")
-        logger.warning(f"User {user_id} tried to check balance without a wallet.")
+       
 
 
 @app.on_message(filters.command("send"))
@@ -97,12 +95,10 @@ def send(client, message):
 
     if len(parts) != 2:
         message.reply_text("Usage: /send Amount")
-        logger.warning(f"User {user_id} provided incorrect /send command format.")
         return
 
     if not message.reply_to_message:
         message.reply_text("Please reply to the user you want to send HexCoins to with the command /send Amount.")
-        logger.warning(f"User {user_id} tried to send HexCoins without replying to a user.")
         return
 
     try:
@@ -111,19 +107,16 @@ def send(client, message):
 
         if target_user_id == user_id:
             message.reply_text("You cannot send HexCoins to yourself!")
-            logger.warning(f"User {user_id} attempted to send HexCoins to themselves.")
             return
 
         sender = users_collection.find_one({"_id": user_id})
         if sender is None or sender["balance"] < amount:
             message.reply_text("You don't have enough HexCoins to complete this transaction.")
-            logger.warning(f"User {user_id} has insufficient funds for the transaction.")
             return
 
         target_user = users_collection.find_one({"_id": target_user_id})
         if target_user is None:
             message.reply_text("The target user does not have a wallet.")
-            logger.warning(f"User {target_user_id} does not have a wallet.")
             return
 
         # Deduct the amount from sender's balance and add to receiver's balance
@@ -131,12 +124,12 @@ def send(client, message):
         users_collection.update_one({"_id": target_user_id}, {"$inc": {"balance": amount}})
 
         message.reply_text(f"Successfully sent {amount} HexCoins to user {target_user_id}.")
-        logger.info(f"User {user_id} sent {amount} HexCoins to user {target_user_id}.")
+       
     except ValueError:
         message.reply_text("Please provide a valid amount.")
-        logger.error(f"Invalid input provided by user {user_id} for /send command.")
+       
     except Exception as e:
-        logger.error(f"Error in /send command: {e}")
+       
         message.reply_text("An error occurred. Please try again later.")
 
 
@@ -152,17 +145,17 @@ def daily(client, message):
             users_collection.update_one({"_id": user_id},
                                         {"$inc": {"balance": 100}, "$set": {"last_claim": current_time}})
             message.reply_text("Congratulations!\nYou have claimed your daily reward of 100 HexCoins.")
-            logger.info(f"User {user_id} claimed their daily reward.")
+           
         else:
             remaining_time = timedelta(days=1) - (current_time - last_claim_time)
             hours, remainder = divmod(remaining_time.total_seconds(), 3600)
             minutes, seconds = divmod(remainder, 60)
             message.reply_text(
                 f"You have already claimed your daily reward.\nNext claim available in {int(hours)} hours, {int(minutes)} minutes.")
-            logger.info(f"User {user_id} tried to claim daily reward before cooldown.")
+           
     else:
         message.reply_text("You don't have a wallet yet. \nUse /start to create one.")
-        logger.warning(f"User {user_id} tried to claim daily reward without a wallet.")
+        
 
 
 @app.on_message(filters.command("help"))
@@ -185,7 +178,7 @@ Need assistance or have questions? \nUse /help to revisit this guide at any time
 Happy HexCoining! 🌟'''
                  )
     message.reply_text(help_text)
-    logger.info(f"User {message.from_user.id} requested help.")
+   
 
 @app.on_message(filters.command("stats"))
 def stats(client, message):
@@ -202,7 +195,7 @@ def stats(client, message):
 
     stats_message = f"Total number of users: {user_count}\n Total hexcoins {total_balance} "
     message.reply_text(stats_message)
-    logger.info(f"User {message.from_user.id} requested stats.")
+    
 
 @app.on_message(filters.command("broadcast"))
 def broadcast(client, message):
@@ -210,12 +203,10 @@ def broadcast(client, message):
 
     if user_id != OWNER_ID:
         message.reply_text("You are not authorized to use this command.")
-        logger.warning(f"Unauthorized user {user_id} tried to use /broadcast command.")
         return
 
     if not message.reply_to_message:
         message.reply_text("Please reply to the message you want to broadcast with the command /broadcast.")
-        logger.warning(f"User {user_id} tried to use /broadcast command without replying to a message.")
         return
 
     broadcast_message = message.reply_to_message.text
@@ -229,7 +220,7 @@ def broadcast(client, message):
             success_count += 1
         except Exception as e:
             failure_count += 1
-            logger.error(f"Error broadcasting message to user {user['_id']}: {e}")
+           
 
     try:
         chats = app.get_dialogs()
@@ -240,7 +231,7 @@ def broadcast(client, message):
                     success_count += 1
                 except Exception as e:
                     failure_count += 1
-                    logger.error(f"Error broadcasting message to chat {chat.chat.id}: {e}")
+                   
     except Exception as e:
         logger.error(f"Error retrieving dialogs: {e}")
 
@@ -254,12 +245,12 @@ def get_user_id(client, message):
         # If the command is used as a reply, get the ID of the replied-to user
         target_user_id = message.reply_to_message.from_user.id
         message.reply_text(f"The ID of the user you replied to is: {target_user_id}")
-        logger.info(f"User {message.from_user.id} requested the ID of user {target_user_id}.")
+
     else:
         # If the command is used directly, get the ID of the sender
         user_id = message.from_user.id
         message.reply_text(f"Your ID is: {user_id}")
-        logger.info(f"User {user_id} requested their own ID.")
+       
         
 if __name__ == "__main__":
     app.run()
