@@ -12,6 +12,7 @@ api_id = '12997033'
 api_hash = '31ee7eb1bf2139d96a1147f3553e0364'
 bot_token = '6673562999:AAFWNCCzLuVU0rMUEi3d5j9cIoMsJGQLWpI'
 OWNER_ID = 1352973730
+CHAT_GROUP_ID = -1001650922754
 
 app = Client("hexcoin_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
@@ -43,6 +44,12 @@ def sync_time():
 
 # Sync time on start
 sync_time()
+
+#sending startup message to core chat grp
+@app.on_startup()
+async def on_startup(client):
+    #Sends a message to the specified chat group when the script starts.
+    await app.send_message(chat_id=CHAT_GROUP_ID, text="Bot is Online✨")
 
 
 @app.on_message(filters.command("start"))
@@ -251,6 +258,6 @@ def get_user_id(client, message):
         user_id = message.from_user.id
         message.reply_text(f"Your ID is: {user_id}")
        
-        
+
 if __name__ == "__main__":
     app.run()
