@@ -45,13 +45,16 @@ def sync_time():
 # Sync time on start
 sync_time()
 
-#sending startup message to core chat grp
+'''#sending startup message to core chat grp
 @app.on_startup()
 async def on_startup(client):
     #Sends a message to the specified chat group when the script starts.
-    await app.send_message(chat_id=CHAT_GROUP_ID, text="Bot is Online✨")
+    await app.send_message(chat_id=CHAT_GROUP_ID, text="Bot is Online✨")'''
 
-
+# Define a startup function
+async def startup_message(client):
+    await client.send_message(chat_id=CHAT_GROUP_ID, "Bot is Online✨")
+    
 @app.on_message(filters.command("start"))
 def start(client, message):
     user_id = message.from_user.id
