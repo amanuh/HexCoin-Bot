@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from pymongo import MongoClient
 from datetime import datetime, timezone
 import requests
-
+import time
 
 # Replace these with your API ID, hash, and bot token
 api_id = '12997033'
@@ -32,7 +32,7 @@ send_message_to_group("Bot is Started")
 async def send_message_to_groups():
     async with app:
         while True:
-            await app.send_message("@HexCoinBank", "Checkup Message. 📝")
+            await app.send_message("@HexCoinBank", "Checkup Message 📝")
             await asyncio.sleep(3 * 60 * 60)  # Sleep for 3 hours
 
 # Start the send_message_to_groups
@@ -277,5 +277,4 @@ def get_user_id(client, message):
         message.reply_text(f"Your ID is: {user_id}")
        
 
-if __name__ == "__main__":
-    app.run()
+app.run()
