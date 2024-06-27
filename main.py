@@ -24,18 +24,19 @@ def send_message_to_group(text):
     }
     response = requests.post(url, json=payload)
     return response.json()
+# Initial message to indicate bot is started
 send_message_to_group("Bot is Started")
 
 
-
-# Function to send message to the group
-def send_message_to_group():
-    with app:
+# Function to send message to the group every 3 hours
+async def send_message_to_groups():
+    async with app:
         while True:
-            app.send_message(-1002178514763, "Checkup Message. 📝")
-            time.sleep(3 * 60 * 60)  # Sleep for 3 hours
-send_message_to_group()
+            await app.send_message("@HexCoinBank", "Checkup Message. 📝")
+            await asyncio.sleep(3 * 60 * 60)  # Sleep for 3 hours
 
+# Start the send_message_to_groups
+send_message_to_groups()
 
 
 # Configure logging
