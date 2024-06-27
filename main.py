@@ -17,7 +17,7 @@ CHAT_GROUP_ID = -1001650922754
 app = Client("hexcoin_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
 def send_message_to_group(text):
-    url = f'https://api.telegram.org/bot5432354084:AAEQWJbTNvTEGjNr2V9HWoZaFPg-z4HYFUk/sendMessage'
+    url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
     payload = {
         'chat_id': CHAT_GROUP_ID,
         'text': text
