@@ -19,13 +19,23 @@ app = Client("hexcoin_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_toke
 def send_message_to_group(text):
     url = f'https://api.telegram.org/bot5432354084:AAEQWJbTNvTEGjNr2V9HWoZaFPg-z4HYFUk/sendMessage'
     payload = {
-        'chat_id': -1001650922754,
+        'chat_id': CHAT_GROUP_ID,
         'text': text
     }
     response = requests.post(url, json=payload)
     return response.json()
-
 send_message_to_group("Bot is Started")
+
+
+
+# Function to send message to the group
+def send_message_to_group():
+    with app:
+        while True:
+            app.send_message(-1002178514763, "Checkup Message. 📝")
+            time.sleep(3 * 60 * 60)  # Sleep for 3 hours
+send_message_to_group()
+
 
 
 # Configure logging
