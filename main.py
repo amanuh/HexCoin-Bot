@@ -4,7 +4,7 @@ import pytz
 from datetime import datetime, timedelta
 from pymongo import MongoClient
 from datetime import datetime, timezone
-
+import requests
 
 
 # Replace these with your API ID, hash, and bot token
@@ -15,6 +15,18 @@ OWNER_ID = 1352973730
 CHAT_GROUP_ID = -1001650922754
 
 app = Client("hexcoin_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
+
+def send_message_to_group(text):
+    url = f'https://api.telegram.org/bot5432354084:AAEQWJbTNvTEGjNr2V9HWoZaFPg-z4HYFUk/sendMessage'
+    payload = {
+        'chat_id': -1001650922754,
+        'text': text
+    }
+    response = requests.post(url, json=payload)
+    return response.json()
+
+send_message_to_group("Bot is Started")
+
 
 # Configure logging
 logging.basicConfig(
