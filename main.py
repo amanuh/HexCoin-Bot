@@ -8,25 +8,13 @@ import requests
 import time
 
 # Replace these with your API ID, hash, and bot token
-api_id = '12997033'
-api_hash = '31ee7eb1bf2139d96a1147f3553e0364'
-bot_token = '6673562999:AAFWNCCzLuVU0rMUEi3d5j9cIoMsJGQLWpI'
-OWNER_ID = 1352973730
-CHAT_GROUP_ID = -1001650922754
+api_id = 'your_api_id'
+api_hash = 'your_api_hash'
+bot_token = 'bot_token'
+OWNER_ID = 293768732
+CHAT_GROUP_ID = -123456788
 
 app = Client("hexcoin_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
-
-'''def send_message_to_group(text):
-    url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
-    payload = {
-        'chat_id': CHAT_GROUP_ID,
-        'text': text
-    }
-    response = requests.post(url, json=payload)
-    return response.json()
-# Initial message to indicate bot is started
-send_message_to_group("Bot is Started")'''
-
 
 # Function to send message to the group every 3 hours
 async def send_message_to_groups():
@@ -55,7 +43,7 @@ utc_now = datetime.now(timezone.utc)
 
 
 # MongoDB setup (replace <username>, <password>, <dbname> with actual values)
-mongo_uri = "mongodb+srv://syblewilliam8103:amanpathan123@systemdata.vyhjllc.mongodb.net/?retryWrites=true&w=majority&appName=SystemData"
+mongo_uri = "mongodb+srv://example:exaple123@systemdata.vyhjllc.mongodb.net/?retryWrites=true&w=majority&appName=SystemData" #replace with your own
 client = MongoClient(mongo_uri)
 db = client["hexcoin_bot"]
 users_collection = db["users"]
