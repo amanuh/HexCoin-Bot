@@ -1,8 +1,0 @@
-services:
-  - name: hexcoin-bot
-    type: worker
-    env: docker
-    dockerfilePath: ./Dockerfile
-    buildCommand: ""
-    startCommand: ./start.sh
-    
