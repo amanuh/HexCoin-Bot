@@ -65,7 +65,7 @@ Python handles the rules.
 <h2>Setup</h2>
 
 <pre>
-git clone https://github.com/YOUR_USERNAME/HexCoin-Bot.git
+git clone https://github.com/amanuh/HexCoin-Bot.git
 cd HexCoin-Bot
 
 pip install pyrogram tgcrypto pymongo pytz
@@ -130,27 +130,6 @@ The bot also sends a checkup message to <code>@HexCoinBank</code> every 3 hours.
 hexcoin_bot.log
 </pre>
 
-<p>
-Don't commit your bot token or MongoDB credentials.
-</p>
-
-<p>
-If you somehow leak them, rotate them.
-Don't just delete the GitHub commit and hope nobody noticed.
-</p>
-
-<h2>Why I made this</h2>
-
-<p>Started as a simple Telegram currency bot.</p>
-
-<p>Then it got MongoDB.</p>
-
-<p>Then people started having balances.</p>
-
-<p>At that point it became an economy.</p>
-
-<p>So here we are.</p>
-
 <hr>
 
 <div align="center">
@@ -159,6 +138,6 @@ Don't just delete the GitHub commit and hope nobody noticed.
 
 <br>
 
-<sub>completely imaginary money with very real database records.</sub>
+<sub>its completely imaginary money .</sub>
 
 </div>
