@@ -54,14 +54,6 @@ MongoDB
 asyncio
 </pre>
 
-<p>Nothing fancy.</p>
-
-<p>
-Telegram handles the messages.<br>
-MongoDB remembers who owns what.<br>
-Python handles the rules.
-</p>
-
 <h2>Setup</h2>
 
 <pre>
@@ -101,10 +93,6 @@ hexcoin_bot
 
 <h2>The economy</h2>
 
-<p>There is no blockchain here.</p>
-
-<p>There doesn't need to be one.</p>
-
 <p>
 HexCoin is an application-level currency.
 The database is the ledger and the bot is the authority.
@@ -120,9 +108,6 @@ If the database says you have <code>0</code>, congratulations.
 
 <h2>Notes</h2>
 
-<p>
-The bot also sends a checkup message to <code>@HexCoinBank</code> every 3 hours.
-</p>
 
 <p>Logs go to:</p>
 
